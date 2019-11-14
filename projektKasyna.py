@@ -1,8 +1,17 @@
+import random
 def rundaBlackjack(karty):
-    print(karty)
+    kartyGracza = []
+    kartyDealera = []
+    while len(kartyGracza)<2:
+        nazwa, slownikWartosci = random.choice(list(karty.items()))
+        wartosc, czyWybrana = random.choice(list(slownikWartosci.items()))
+        if czyWybrana == False:
+            kartyGracza.append([nazwa,wartosc])
+            karty[nazwa][wartosc] = True
+    print(kartyGracza)
+
 def blackjackWprowadzenie():
-    karty = {'Serce': {'Dwa': False, 'Trzy': False, 'Cztery': False, 'Piec': False, 'Szesc': False, 'Siedem': False, 'Osiem': False, 'Dziewiec': False, 'Dziesiec': False, 'Walet': False, 'Dama': False, 'Król': False, 'As': False}, 'Piki':{'Dwa': False, 'Trzy': False, 'Cztery': False, 'Piec': False, 'Szesc': False, 'Siedem': False, 'Osiem': False, 'Dziewiec': False, 'Dziesiec': False, 'Walet': False, 'Dama': False, 'Król': False, 'As': False}, 'Trefle':{'Dwa': False, 'Trzy': False, 'Cztery': False, 'Piec': False, 'Szesc': False, 'Siedem': False, 'Osiem': False, 'Dziewiec': False, 'Dziesiec': False, 'Walet': False, 'Dama': False, 'Król': False, 'As': False},'Kiery':{'Dwa': False, 'Trzy': False, 'Cztery': False, 'Piec': False, 'Szesc': False, 'Siedem': False, 'Osiem': False, 'Dziewiec': False, 'Dziesiec': False, 'Walet': False, 'Dama': False, 'Król': False, 'As': False}}
-    print("Witamy w grze blackjack")
+    karty = {'Serce': {'Dwa': False, 'Trzy': False, 'Cztery': False, 'Pięć': False, 'Sześć': False, 'Siedem': False, 'Osiem': False, 'Dziewięć': False, 'Dziesięć': False, 'Walet': False, 'Dama': False, 'Król': False, 'As': False}, 'Piki':{'Dwa': False, 'Trzy': False, 'Cztery': False, 'Piec': False, 'Szesc': False, 'Siedem': False, 'Osiem': False, 'Dziewiec': False, 'Dziesiec': False, 'Walet': False, 'Dama': False, 'Król': False, 'As': False}, 'Trefle':{'Dwa': False, 'Trzy': False, 'Cztery': False, 'Piec': False, 'Szesc': False, 'Siedem': False, 'Osiem': False, 'Dziewiec': False, 'Dziesiec': False, 'Walet': False, 'Dama': False, 'Król': False, 'As': False},'Kiery':{'Dwa': False, 'Trzy': False, 'Cztery': False, 'Piec': False, 'Szesc': False, 'Siedem': False, 'Osiem': False, 'Dziewiec': False, 'Dziesiec': False, 'Walet': False, 'Dama': False, 'Król': False, 'As': False}}
     print("Wpisz 1 aby rozpocząć grę, lub 0 aby wyjść z niej")
     rozpoczecie = False
     while rozpoczecie == False:
@@ -30,6 +39,7 @@ def menuGier():
     while prawidlowyWybor == False:
         wybor = int(input())
         if wybor == 1:
+            print("Witamy w grze blackjack")
             blackjackWprowadzenie()
             prawidlowyWybor = True
         elif wybor == 2:
