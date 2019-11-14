@@ -33,6 +33,7 @@ def doWidzenia(bylWKasynie):
     print("Do widzenia! Do zobaczenia następnym razem!")
     if bylWKasynie == True:
         print("Twoj stan konta po wyjsciu wynosi " + str(stanKonta))
+
 def czyChceszWejsc():
     tak = False
     while tak == False:
@@ -52,7 +53,6 @@ def czyChceszWejsc():
 def blad():
     print("Błąd wprowadzenia, powtórz, wpisując T dla tak lub N dla nie")
 
-
 def czyPelnoletni():
     pelnoletni = False
     while pelnoletni == False:
@@ -68,7 +68,6 @@ def czyPelnoletni():
             blad()
     if pelnoletni == True:
         czyChceszWejsc()
-
 
 print("Witaj w kasynie W&W")
 stanKonta = float(1000)
