@@ -1,4 +1,16 @@
 import random
+def dobieranieKarty(karty, kartyUczestnika):
+    czyDobrana = False
+    while czyDobrana == False:
+        nazwa, slownikWartosci = random.choice(list(karty.items()))
+        wartosc, czyWybrana = random.choice(list(slownikWartosci.items()))
+        if czyWybrana == False:
+            kartyUczestnika.append([nazwa, wartosc])
+            karty[nazwa][wartosc] = True
+            czyDobrana = True
+    return kartyUczestnika
+
+
 def punkty(wartosc):
     punktyZdobyte = int(0)
     if wartosc == 'Dwa':
@@ -17,6 +29,8 @@ def punkty(wartosc):
             punktyZdobyte = 8
     elif wartosc == 'Dziewięć':
             punktyZdobyte = 9
+    elif wartosc == "Dziesięć":
+            punktyZdobyte = 10
     elif wartosc == 'Walet':
             punktyZdobyte = 10
     elif wartosc == 'Dama':
@@ -65,19 +79,57 @@ def rundaBlackjack(karty):
             kartyDealera.append([nazwa,wartosc])
             karty[nazwa][wartosc] = True
     punktacjaGracza, punktacjaDealera  = punktacjaKart(kartyGracza,kartyDealera)
-    print("Karty dealera to:")
-    for i in range(len(kartyDealera)):
-        print(kartyDealera[i][1] + " " + kartyDealera[i][0])
-    print("(Punktacja kart: " + str(punktacjaDealera) + ")")
-    print(" ")
-    print("Karty gracza to:")
-    for i in range(len(kartyGracza)):
-        print(kartyGracza[i][1] + " " + kartyGracza[i][0])
-    print("(Punktacja kart: " + str(punktacjaGracza) + ")")
+    ktosWygral = False
+    czySkonczyles = False
+    while ktosWygral == False:
+        print("Karty dealera to:")
+        for i in range(len(kartyDealera)):
+            print(kartyDealera[i][1] + " " + kartyDealera[i][0])
+        print("(Punktacja kart: " + str(punktacjaDealera) + ")")
+        print(" ")
+        print("Karty gracza to:")
+        for i in range(len(kartyGracza)):
+            print(kartyGracza[i][1] + " " + kartyGracza[i][0])
+        print("(Punktacja kart: " + str(punktacjaGracza) + ")")
+
+        if punktacjaGracza == 21 and punktacjaDealera == 21:
+            print("REMIS")
+            ktosWygral = True
+        elif punktacjaGracza == 21:
+            print("MASZ BLACKJACKA WYGRAŁEŚ!")
+            ktosWygral = True
+        elif punktacjaDealera == 21:
+            print("DEALER MA BLACKJACKA, WYGRAŁ!")
+            ktosWygral = True
+        elif punktacjaDealera > 21:
+            print("DEALER MA WIĘCEJ NIZ 21 PUNKTÓW, WYGRAŁEŚ!")
+            ktosWygral = True
+        elif punktacjaGracza > 21:
+            print("MASZ WIĘCEJ NIŻ 21 PUNKTÓW, PRZEGRAŁEŚ")
+            ktosWygral = True
+        else:
+            if czySkonczyles == False:
+                print("Czy chcesz dobrać kolejną kartę? [dobierz/zostaw]")
+                dobieranie = str(input())
+                if dobieranie == 'dobierz':
+                    kartyGracza = dobieranieKarty(karty, kartyGracza)
+                    punktacjaGracza, punktacjaDealera = punktacjaKart(kartyGracza, kartyDealera)
+                if dobieranie == 'zostaw':
+                    czySkonczyles = True
+                else:
+                    print("Niepoprawne slowo, wpisz dobierz dla dobrania karty lub zostaw dla skończenia")
+            else:
+                while punktacjaDealera < punktacjaGracza and punktacjaDealera <= 21:
+                    kartyDealera = dobieranieKarty(karty, kartyDealera)
+                    punktacjaGracza, punktacjaDealera = punktacjaKart(kartyGracza, kartyDealera)
+                if punktacjaDealera > punktacjaGracza and punktacjaDealera <= 21:
+                    print("DEALER MA WIĘCEJ PUNKTÓW NIŻ TY I MNIEJ NIŻ 22, PRZEGRAŁEŚ")
+                    ktosWygral = True
+
 
 
 def blackjackWprowadzenie():
-    karty = {'Serce': {'Dwa': False, 'Trzy': False, 'Cztery': False, 'Pięć': False, 'Sześć': False, 'Siedem': False, 'Osiem': False, 'Dziewięć': False, 'Dziesięć': False, 'Walet': False, 'Dama': False, 'Król': False, 'As': False}, 'Piki':{'Dwa': False, 'Trzy': False, 'Cztery': False, 'Piec': False, 'Szesc': False, 'Siedem': False, 'Osiem': False, 'Dziewiec': False, 'Dziesiec': False, 'Walet': False, 'Dama': False, 'Król': False, 'As': False}, 'Trefle':{'Dwa': False, 'Trzy': False, 'Cztery': False, 'Piec': False, 'Szesc': False, 'Siedem': False, 'Osiem': False, 'Dziewiec': False, 'Dziesiec': False, 'Walet': False, 'Dama': False, 'Król': False, 'As': False},'Kiery':{'Dwa': False, 'Trzy': False, 'Cztery': False, 'Piec': False, 'Szesc': False, 'Siedem': False, 'Osiem': False, 'Dziewiec': False, 'Dziesiec': False, 'Walet': False, 'Dama': False, 'Król': False, 'As': False}}
+    karty = {'Serce': {'Dwa': False, 'Trzy': False, 'Cztery': False, 'Pięć': False, 'Sześć': False, 'Siedem': False, 'Osiem': False, 'Dziewięć': False, 'Dziesięć': False, 'Walet': False, 'Dama': False, 'Król': False, 'As': False}, 'Piki':{'Dwa': False, 'Trzy': False, 'Cztery': False, 'Pięć': False, 'Sześć': False, 'Siedem': False, 'Osiem': False, 'Dziewięć': False, 'Dziesięć': False, 'Walet': False, 'Dama': False, 'Król': False, 'As': False}, 'Trefle':{'Dwa': False, 'Trzy': False, 'Cztery': False, 'Pięć': False, 'Sześć': False, 'Siedem': False, 'Osiem': False, 'Dziewięć': False, 'Dziesięć': False, 'Walet': False, 'Dama': False, 'Król': False, 'As': False},'Kiery':{'Dwa': False, 'Trzy': False, 'Cztery': False, 'Pięć': False, 'Sześć': False, 'Siedem': False, 'Osiem': False, 'Dziewięć': False, 'Dziesięć': False, 'Walet': False, 'Dama': False, 'Król': False, 'As': False}}
     print("Wpisz 1 aby rozpocząć grę, lub 0 aby wyjść z niej")
     rozpoczecie = False
     while rozpoczecie == False:
