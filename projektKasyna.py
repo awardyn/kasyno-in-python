@@ -59,6 +59,8 @@ def punktacjaKart(kartyGracza, kartyDealera):
         if wartosc == 'As':
             dealerMaAsa = True
         punktyDealera += punktyKarty
+    if (dealerMaAsa == True and punktyDealera + 10<=21):
+        punktyDealera +=10
     return punktyGracza, punktyDealera
     
         
@@ -114,18 +116,26 @@ def rundaBlackjack(karty):
                 if dobieranie == 'dobierz':
                     kartyGracza = dobieranieKarty(karty, kartyGracza)
                     punktacjaGracza, punktacjaDealera = punktacjaKart(kartyGracza, kartyDealera)
-                if dobieranie == 'zostaw':
+                elif dobieranie == 'zostaw':
                     czySkonczyles = True
                 else:
                     print("Niepoprawne slowo, wpisz dobierz dla dobrania karty lub zostaw dla skończenia")
             else:
-                while punktacjaDealera < punktacjaGracza and punktacjaDealera <= 21:
+                while punktacjaDealera <= punktacjaGracza and punktacjaDealera < 21:
                     kartyDealera = dobieranieKarty(karty, kartyDealera)
                     punktacjaGracza, punktacjaDealera = punktacjaKart(kartyGracza, kartyDealera)
                 if punktacjaDealera > punktacjaGracza and punktacjaDealera <= 21:
                     print("DEALER MA WIĘCEJ PUNKTÓW NIŻ TY I MNIEJ NIŻ 22, PRZEGRAŁEŚ")
                     ktosWygral = True
-
+    wybor = False    
+    while  wybor == False:
+        ponownaGra = int(input("Czy chciałbyś zagrać ponownie? Wpisz 1 jeżeli tak lub 0 jeżeli chcesz wrócić do menu gier"))
+        if ponownaGra == 1:
+            blackjackWprowadzenie()
+        elif ponownaGra == 0:
+            menuGier()
+        else:
+            print("Błędne wprowadzenie, wprowadź 1 aby rozpocząć nową grę lub 0 aby wrócić do menu gier")
 
 
 def blackjackWprowadzenie():
