@@ -65,7 +65,16 @@ def punktacjaKart(kartyGracza, kartyDealera):
     
         
 
-def rundaBlackjack(karty):
+def rundaBlackjack(stanKonta, karty):
+    kwotaWprowadzona = False
+    while kwotaWprowadzona == False:
+        kwota= int(input("Wprowadz kwotę jaką chcesz obstawić. Dostępny jest przedział od 0 do " + str(stanKonta)))
+        if kwota<=0:
+            print("Nie można wprowadzić ujemnej ani zerowej kwoty, wprowadź jeszcze raz")
+        elif kwota>stanKonta:
+            print("Nie masz tyle pieniedzy, sprobuj jeszcze raz")
+        else:
+            kwotaWprowadzona = True
     kartyGracza = []
     kartyDealera = []
     while len(kartyGracza) < 2:
@@ -99,14 +108,18 @@ def rundaBlackjack(karty):
             ktosWygral = True
         elif punktacjaGracza == 21:
             print("MASZ BLACKJACKA WYGRAŁEŚ!")
+            stanKonta +=kwota
             ktosWygral = True
         elif punktacjaDealera == 21:
+            stanKonta -=kwota
             print("DEALER MA BLACKJACKA, WYGRAŁ!")
             ktosWygral = True
         elif punktacjaDealera > 21:
+            stanKonta +=kwota
             print("DEALER MA WIĘCEJ NIZ 21 PUNKTÓW, WYGRAŁEŚ!")
             ktosWygral = True
         elif punktacjaGracza > 21:
+            stanKonta -=kwota
             print("MASZ WIĘCEJ NIŻ 21 PUNKTÓW, PRZEGRAŁEŚ")
             ktosWygral = True
         else:
@@ -125,20 +138,32 @@ def rundaBlackjack(karty):
                     kartyDealera = dobieranieKarty(karty, kartyDealera)
                     punktacjaGracza, punktacjaDealera = punktacjaKart(kartyGracza, kartyDealera)
                 if punktacjaDealera > punktacjaGracza and punktacjaDealera <= 21:
+                    print("Karty dealera to:")
+                    for i in range(len(kartyDealera)):
+                        print(kartyDealera[i][1] + " " + kartyDealera[i][0])
+                    print("(Punktacja kart: " + str(punktacjaDealera) + ")")
+                    print(" ")
+                    print("Karty gracza to:")
+                    for i in range(len(kartyGracza)):
+                        print(kartyGracza[i][1] + " " + kartyGracza[i][0])
+                    print("(Punktacja kart: " + str(punktacjaGracza) + ")")
+                    stanKonta -=kwota
                     print("DEALER MA WIĘCEJ PUNKTÓW NIŻ TY I MNIEJ NIŻ 22, PRZEGRAŁEŚ")
                     ktosWygral = True
     wybor = False    
     while  wybor == False:
+        if stanKonta == 0:
+            doWidzenia(stanKonta,True)
         ponownaGra = int(input("Czy chciałbyś zagrać ponownie? Wpisz 1 jeżeli tak lub 0 jeżeli chcesz wrócić do menu gier"))
         if ponownaGra == 1:
-            blackjackWprowadzenie()
+            blackjackWprowadzenie(stanKonta)
         elif ponownaGra == 0:
-            menuGier()
+            menuGier(stanKonta)
         else:
             print("Błędne wprowadzenie, wprowadź 1 aby rozpocząć nową grę lub 0 aby wrócić do menu gier")
 
 
-def blackjackWprowadzenie():
+def blackjackWprowadzenie(stanKonta):
     karty = {'Serce': {'Dwa': False, 'Trzy': False, 'Cztery': False, 'Pięć': False, 'Sześć': False, 'Siedem': False, 'Osiem': False, 'Dziewięć': False, 'Dziesięć': False, 'Walet': False, 'Dama': False, 'Król': False, 'As': False}, 'Piki':{'Dwa': False, 'Trzy': False, 'Cztery': False, 'Pięć': False, 'Sześć': False, 'Siedem': False, 'Osiem': False, 'Dziewięć': False, 'Dziesięć': False, 'Walet': False, 'Dama': False, 'Król': False, 'As': False}, 'Trefle':{'Dwa': False, 'Trzy': False, 'Cztery': False, 'Pięć': False, 'Sześć': False, 'Siedem': False, 'Osiem': False, 'Dziewięć': False, 'Dziesięć': False, 'Walet': False, 'Dama': False, 'Król': False, 'As': False},'Kiery':{'Dwa': False, 'Trzy': False, 'Cztery': False, 'Pięć': False, 'Sześć': False, 'Siedem': False, 'Osiem': False, 'Dziewięć': False, 'Dziesięć': False, 'Walet': False, 'Dama': False, 'Król': False, 'As': False}}
     print("Wpisz 1 aby rozpocząć grę, lub 0 aby wyjść z niej")
     rozpoczecie = False
@@ -151,11 +176,11 @@ def blackjackWprowadzenie():
         else:
             print("Błędne wprowadzenie, wprowadź jeszcze raz 1 albo 0")
     if zeroJeden == 1:
-        rundaBlackjack(karty)
+        rundaBlackjack(stanKonta,karty)
     else:
-        menuGier()
+        menuGier(stanKonta)
 
-def menuGier():
+def menuGier(stanKonta):
     czyWKasynie = True
     print("Menu Gier")
     print("Twoj aktualny stan konta to " + str(stanKonta) + ". W co chciałbyś aktualnie zagrać?")
@@ -168,7 +193,7 @@ def menuGier():
         wybor = int(input())
         if wybor == 1:
             print("Witamy w grze blackjack")
-            blackjackWprowadzenie()
+            blackjackWprowadzenie(stanKonta)
             prawidlowyWybor = True
         elif wybor == 2:
             print("2")
@@ -183,15 +208,18 @@ def menuGier():
             print("5")
             prawidlowyWybor = True
         elif wybor == 0:
-            doWidzenia(czyWKasynie)
+            doWidzenia(stanKonta, czyWKasynie)
             prawidlowyWybor = True
         else:
             print("Bledny wybor sprobuj ponownie ")
 
-def doWidzenia(bylWKasynie):
+def doWidzenia(stanKonta, bylWKasynie):
     print("Do widzenia! Do zobaczenia następnym razem!")
     if bylWKasynie == True:
-        print("Twoj stan konta po wyjsciu wynosi " + str(stanKonta))
+        if stanKonta == 0:
+            print("Twoj stan konta wynosi 0 więc wypadasz z kasyna, do zobaczenia!")
+        else:
+            print("Twoj stan konta po wyjsciu wynosi " + str(stanKonta))
     quit()
 
 def czyChceszWejsc():
@@ -203,12 +231,13 @@ def czyChceszWejsc():
             tak = True
         elif wejscie == "N":
             print("Szkoda!")
-            doWidzenia(czyWKasynie)
+            doWidzenia(0, czyWKasynie)
             break
         else:
             blad()
     if tak == True:
-        menuGier()
+        stanKonta = float(1000)
+        menuGier(stanKonta)
         
 def blad():
     print("Błąd wprowadzenia, powtórz, wpisując T dla tak lub N dla nie")
@@ -222,7 +251,7 @@ def czyPelnoletni():
             pelnoletni = True
         elif pelnoletnosc == "N":
             print("Niestety musisz opuścić ten lokal")
-            doWidzenia(czyWKasynie)
+            doWidzenia(0, czyWKasynie)
             break
         else:
             blad()
@@ -230,6 +259,5 @@ def czyPelnoletni():
         czyChceszWejsc()
 
 print("Witaj w kasynie W&W")
-stanKonta = float(1000)
 czyWKasynie = False
 czyPelnoletni()
