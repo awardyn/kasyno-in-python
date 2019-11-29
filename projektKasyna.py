@@ -1,4 +1,13 @@
 import random
+def doWidzenia(stanKonta, bylWKasynie):
+    print("Do widzenia! Do zobaczenia następnym razem!")
+    if bylWKasynie == True:
+        if stanKonta == 0:
+            print("Twoj stan konta wynosi 0 więc wypadasz z kasyna!")
+        else:
+            print("Twoj stan konta po wyjsciu wynosi " + str(stanKonta))
+    quit()
+
 def dobieranieKarty(karty, kartyUczestnika):
     czyDobrana = False
     while czyDobrana == False:
@@ -9,7 +18,6 @@ def dobieranieKarty(karty, kartyUczestnika):
             karty[nazwa][wartosc] = True
             czyDobrana = True
     return kartyUczestnika
-
 
 def punkty(wartosc):
     punktyZdobyte = int(0)
@@ -40,6 +48,7 @@ def punkty(wartosc):
     elif wartosc == 'As':
             punktyZdobyte = 1
     return punktyZdobyte
+
 def punktacjaKart(kartyGracza, kartyDealera):
     punktyGracza = int(0)
     punktyDealera = int(0)
@@ -161,6 +170,22 @@ def rundaBlackjack(stanKonta, karty):
             menuGier(stanKonta)
         else:
             print("Błędne wprowadzenie, wprowadź 1 aby rozpocząć nową grę lub 0 aby wrócić do menu gier")
+def rundaRuletki(stanKonta, ruletka):
+    cyfry = []
+    for i in range(37):
+        cyfry.append(str(i))
+    print("Wybierz co chcesz obstawić. Do wyboru masz: ")
+    print("1. Numery od 0-36 (wyplata 35-1)")
+    print("2. Numery parzyste/nieparzyste (wyplata 1-1)")
+    print("3. Kolory czerwone/czarne (wplata 1-1)")
+    print("4. Pierwszy tuzin/drugi tuzin/ trzeci tuzin (wyplata 2-1)")
+    poprawnieWybrane = False
+    while poprawnieWybrane == False:
+        wybor = input()
+        if wybor in cyfry or wybor.lower() == 'parzyste' or wybor.lower() == 'nieparzyste' or wybor.lower() == 'czerwone' or wybor.lower() == 'czarne' or wybor.lower() == 'pierwszy tuzin' or wybor.lower() == 'drugi tuzin' or wybor.lower() == 'trzeci tuzin':
+            poprawnieWybrane = True
+        else:
+            print("Błędny wybór, proszę wprowadzić poprawną nazwę")
 
 
 def blackjackWprowadzenie(stanKonta):
@@ -180,11 +205,28 @@ def blackjackWprowadzenie(stanKonta):
     else:
         menuGier(stanKonta)
 
+def ruletkaWprowadzenie(stanKonta):
+    ruletka = {'Czerwone': [1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36], 'Czarne':[2,4,6,8,10,11,13,15,17,20,22,24,26,28,29,31,33,35]}
+    rozpoczecie = False
+    print("Wpisz 1 aby rozpocząć grę, lub 0 aby wyjść z niej")
+    while rozpoczecie == False:
+        zeroJeden = int(input())
+        if zeroJeden == 1:
+            rozpoczecie = True
+        elif zeroJeden == 0:
+            rozpoczecie = True
+        else:
+            print("Błędne wprowadzenie, wprowadź jeszcze raz 1 albo 0")
+    if zeroJeden == 1:
+        rundaRuletki(stanKonta,ruletka)
+    else:
+        menuGier(stanKonta)
+
 def menuGier(stanKonta):
     czyWKasynie = True
     print("Menu Gier")
     print("Twoj aktualny stan konta to " + str(stanKonta) + ". W co chciałbyś aktualnie zagrać?")
-    listaGier = ['blackjack','bcd','cde','def','efg']
+    listaGier = ['blackjack','ruletka','cde','def','efg']
     for i in range(len(listaGier)):
         print("Jeżeli chcesz zagrać w " + listaGier[i] + " wybierz " + str(i+1))
     print("Jeżeli chcesz wyjść z kasyna wybierz 0")
@@ -196,7 +238,7 @@ def menuGier(stanKonta):
             blackjackWprowadzenie(stanKonta)
             prawidlowyWybor = True
         elif wybor == 2:
-            print("2")
+            ruletkaWprowadzenie(stanKonta)
             prawidlowyWybor = True
         elif wybor == 3:
             print("3")
@@ -212,15 +254,6 @@ def menuGier(stanKonta):
             prawidlowyWybor = True
         else:
             print("Bledny wybor sprobuj ponownie ")
-
-def doWidzenia(stanKonta, bylWKasynie):
-    print("Do widzenia! Do zobaczenia następnym razem!")
-    if bylWKasynie == True:
-        if stanKonta == 0:
-            print("Twoj stan konta wynosi 0 więc wypadasz z kasyna!")
-        else:
-            print("Twoj stan konta po wyjsciu wynosi " + str(stanKonta))
-    quit()
 
 def czyChceszWejsc():
     tak = False
