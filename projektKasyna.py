@@ -68,7 +68,7 @@ def punktacjaKart(kartyGracza, kartyDealera):
 def rundaBlackjack(stanKonta, karty):
     kwotaWprowadzona = False
     while kwotaWprowadzona == False:
-        kwota= int(input("Wprowadz kwotę jaką chcesz obstawić. Dostępny jest przedział od 0 do " + str(stanKonta)))
+        kwota= int(input("Wprowadz kwotę jaką chcesz obstawić. Dostępny jest przedział od 0 do " + str(stanKonta) + " " ))
         if kwota<=0:
             print("Nie można wprowadzić ujemnej ani zerowej kwoty, wprowadź jeszcze raz")
         elif kwota>stanKonta:
@@ -154,7 +154,7 @@ def rundaBlackjack(stanKonta, karty):
     while  wybor == False:
         if stanKonta == 0:
             doWidzenia(stanKonta,True)
-        ponownaGra = int(input("Czy chciałbyś zagrać ponownie? Wpisz 1 jeżeli tak lub 0 jeżeli chcesz wrócić do menu gier"))
+        ponownaGra = int(input("Czy chciałbyś zagrać ponownie? Wpisz 1 jeżeli tak lub 0 jeżeli chcesz wrócić do menu gier "))
         if ponownaGra == 1:
             blackjackWprowadzenie(stanKonta)
         elif ponownaGra == 0:
@@ -217,7 +217,7 @@ def doWidzenia(stanKonta, bylWKasynie):
     print("Do widzenia! Do zobaczenia następnym razem!")
     if bylWKasynie == True:
         if stanKonta == 0:
-            print("Twoj stan konta wynosi 0 więc wypadasz z kasyna, do zobaczenia!")
+            print("Twoj stan konta wynosi 0 więc wypadasz z kasyna!")
         else:
             print("Twoj stan konta po wyjsciu wynosi " + str(stanKonta))
     quit()
