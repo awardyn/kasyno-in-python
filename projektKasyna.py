@@ -1,4 +1,5 @@
 import random
+import time
 def doWidzenia(stanKonta, bylWKasynie):
     print("Do widzenia! Do zobaczenia następnym razem!")
     if bylWKasynie == True:
@@ -7,6 +8,18 @@ def doWidzenia(stanKonta, bylWKasynie):
         else:
             print("Twoj stan konta po wyjsciu wynosi " + str(stanKonta))
     quit()
+
+def kwotaDoObstawienia(stanKonta):
+    kwotaWprowadzona = False
+    while kwotaWprowadzona == False:
+        kwota= int(input("Wprowadz kwotę jaką chcesz obstawić. Dostępny jest przedział od 0 do " + str(stanKonta) + " " ))
+        if kwota<=0:
+            print("Nie można wprowadzić ujemnej ani zerowej kwoty, wprowadź jeszcze raz")
+        elif kwota>stanKonta:
+            print("Nie masz tyle pieniedzy, sprobuj jeszcze raz")
+        else:
+            kwotaWprowadzona = True
+    return kwota
 
 def dobieranieKarty(karty, kartyUczestnika):
     czyDobrana = False
@@ -72,18 +85,8 @@ def punktacjaKart(kartyGracza, kartyDealera):
         punktyDealera +=10
     return punktyGracza, punktyDealera
     
-        
-
 def rundaBlackjack(stanKonta, karty):
-    kwotaWprowadzona = False
-    while kwotaWprowadzona == False:
-        kwota= int(input("Wprowadz kwotę jaką chcesz obstawić. Dostępny jest przedział od 0 do " + str(stanKonta) + " " ))
-        if kwota<=0:
-            print("Nie można wprowadzić ujemnej ani zerowej kwoty, wprowadź jeszcze raz")
-        elif kwota>stanKonta:
-            print("Nie masz tyle pieniedzy, sprobuj jeszcze raz")
-        else:
-            kwotaWprowadzona = True
+    kwota = kwotaDoObstawienia(stanKonta)
     kartyGracza = []
     kartyDealera = []
     while len(kartyGracza) < 2:
@@ -116,20 +119,20 @@ def rundaBlackjack(stanKonta, karty):
             print("REMIS")
             ktosWygral = True
         elif punktacjaGracza == 21:
-            print("MASZ BLACKJACKA WYGRAŁEŚ!")
+            print("MASZ BLACKJACKA WYGRAŁEŚ " + str(kwota*2) + "!")
             stanKonta +=kwota
             ktosWygral = True
         elif punktacjaDealera == 21:
             stanKonta -=kwota
-            print("DEALER MA BLACKJACKA, WYGRAŁ!")
+            print("DEALER MA BLACKJACKA, PRZEGRAŁEŚ " + str(kwota) + "!")
             ktosWygral = True
         elif punktacjaDealera > 21:
             stanKonta +=kwota
-            print("DEALER MA WIĘCEJ NIZ 21 PUNKTÓW, WYGRAŁEŚ!")
+            print("DEALER MA WIĘCEJ NIZ 21 PUNKTÓW, WYGRAŁEŚ" + str(kwota*2) + "!")
             ktosWygral = True
         elif punktacjaGracza > 21:
             stanKonta -=kwota
-            print("MASZ WIĘCEJ NIŻ 21 PUNKTÓW, PRZEGRAŁEŚ")
+            print("MASZ WIĘCEJ NIŻ 21 PUNKTÓW, PRZEGRAŁEŚ " + str(kwota) + "!")
             ktosWygral = True
         else:
             if czySkonczyles == False:
@@ -157,7 +160,7 @@ def rundaBlackjack(stanKonta, karty):
                         print(kartyGracza[i][1] + " " + kartyGracza[i][0])
                     print("(Punktacja kart: " + str(punktacjaGracza) + ")")
                     stanKonta -=kwota
-                    print("DEALER MA WIĘCEJ PUNKTÓW NIŻ TY I MNIEJ NIŻ 22, PRZEGRAŁEŚ")
+                    print("DEALER MA WIĘCEJ PUNKTÓW NIŻ TY I MNIEJ NIŻ 22, PRZEGRAŁEŚ " + str(kwota) + "!")
                     ktosWygral = True
     wybor = False    
     while  wybor == False:
@@ -170,6 +173,16 @@ def rundaBlackjack(stanKonta, karty):
             menuGier(stanKonta)
         else:
             print("Błędne wprowadzenie, wprowadź 1 aby rozpocząć nową grę lub 0 aby wrócić do menu gier")
+
+def krecenieKolem():
+    zmienna = 3
+    wynik = random.randint(0,37)
+    while zmienna > 0:
+        print(str(zmienna) + "...")
+        time.sleep(2)
+        zmienna -=1
+    return str(wynik)
+
 def rundaRuletki(stanKonta, ruletka):
     cyfry = []
     for i in range(37):
@@ -186,6 +199,51 @@ def rundaRuletki(stanKonta, ruletka):
             poprawnieWybrane = True
         else:
             print("Błędny wybór, proszę wprowadzić poprawną nazwę")
+    kwota = kwotaDoObstawienia(stanKonta)
+    wynik = krecenieKolem()
+    print(wynik)
+    if wynik == 0 and wybor == '0':
+        print("Gratulacje wygrałeś " + str(36*kwota))
+        stanKonta +=35*kwota
+    else:
+        if wynik %2 == 0:
+            parzystosc = 'parzyste'
+        else:
+            parzystosc = 'nieparzyste'
+        if str(wynik) in ruletka['czerwone']:
+            kolor = 'czerwone'
+        else:
+            kolor = 'czarne'
+        if wynik//12 == 0:
+            tuzin = 'pierwszy tuzin'
+        elif wynik//12 == 1:
+            tuzin = 'drugi tuzin'
+        else:
+            tuzin = 'trzeci tuzin'
+        if wynik == wybor or kolor == wybor.lower() or parzystosc == wybor.lower() or wybor.lower() == tuzin:
+            if wybor in cyfry:
+                print("Gratulacje wygrałeś " + str(36*kwota))
+                stanKonta += 35*kwota
+            elif wybor.lower() == 'parzyste' or wybor.lower() == 'nieparzyste' or wybor.lower() == 'czarne' or wybor.lower() == 'czerwone':
+                print("Gratulacje wygrałeś " + str(2*kwota))
+                stanKonta += kwota
+            else:
+                print("Gratulacje wygrałeś " + str(3*kwota))
+                stanKonta += 2*kwota
+    wybor = False    
+    while  wybor == False:
+        if stanKonta == 0:
+            doWidzenia(stanKonta,True)
+        ponownaGra = int(input("Czy chciałbyś zagrać ponownie? Wpisz 1 jeżeli tak lub 0 jeżeli chcesz wrócić do menu gier "))
+        if ponownaGra == 1:
+            ruletkaWprowadzenie(stanKonta)
+        elif ponownaGra == 0:
+            menuGier(stanKonta)
+        else:
+            print("Błędne wprowadzenie, wprowadź 1 aby rozpocząć nową grę lub 0 aby wrócić do menu gier")
+        
+        
+
 
 
 def blackjackWprowadzenie(stanKonta):
