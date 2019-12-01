@@ -181,7 +181,7 @@ def krecenieKolem():
         print(str(zmienna) + "...")
         time.sleep(2)
         zmienna -=1
-    return str(wynik)
+    return wynik
 
 def rundaRuletki(stanKonta, ruletka):
     cyfry = []
@@ -192,6 +192,7 @@ def rundaRuletki(stanKonta, ruletka):
     print("2. Numery parzyste/nieparzyste (wyplata 1-1)")
     print("3. Kolory czerwone/czarne (wplata 1-1)")
     print("4. Pierwszy tuzin/drugi tuzin/ trzeci tuzin (wyplata 2-1)")
+    print("Kolor czerwony to liczby " + str(ruletka["Czerwone"]) + " a czarne to " + str(ruletka["Czarne"]))
     poprawnieWybrane = False
     while poprawnieWybrane == False:
         wybor = input()
@@ -201,7 +202,8 @@ def rundaRuletki(stanKonta, ruletka):
             print("Błędny wybór, proszę wprowadzić poprawną nazwę")
     kwota = kwotaDoObstawienia(stanKonta)
     wynik = krecenieKolem()
-    print(wynik)
+    print("Wypadło " + str(wynik))
+    
     if wynik == 0 and wybor == '0':
         print("Gratulacje wygrałeś " + str(36*kwota))
         stanKonta +=35*kwota
@@ -210,7 +212,7 @@ def rundaRuletki(stanKonta, ruletka):
             parzystosc = 'parzyste'
         else:
             parzystosc = 'nieparzyste'
-        if str(wynik) in ruletka['czerwone']:
+        if wynik in ruletka['Czerwone']:
             kolor = 'czerwone'
         else:
             kolor = 'czarne'
@@ -230,6 +232,9 @@ def rundaRuletki(stanKonta, ruletka):
             else:
                 print("Gratulacje wygrałeś " + str(3*kwota))
                 stanKonta += 2*kwota
+        else:
+            print("Niestety przegrałeś " + str(kwota))
+            stanKonta -=kwota
     wybor = False    
     while  wybor == False:
         if stanKonta == 0:
