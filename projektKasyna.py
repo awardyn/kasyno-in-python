@@ -2,7 +2,7 @@ import random
 import blackjack
 import koloRuletka
 import wspolneFunkcje
-
+import automat
 
 def kwotaDoObstawienia(stanKonta):
     kwotaWprowadzona = False
@@ -124,7 +124,7 @@ def rundaRuletki(stanKonta, ruletka):
             poprawnieWybrane = True
         else:
             print("Błędny wybór, proszę wprowadzić poprawną nazwę")
-    kwota =kwotaDoObstawienia(stanKonta)
+    kwota = kwotaDoObstawienia(stanKonta)
     wynik = koloRuletka.krecenieKolem()
     print("Wypadło " + str(wynik))
     
@@ -172,6 +172,50 @@ def rundaRuletki(stanKonta, ruletka):
             print("Błędne wprowadzenie, wprowadź 1 aby rozpocząć nową grę lub 0 aby wrócić do menu gier")
 
 
+def rundaAutomatu(stanKonta, symbole_i_wartosci, lista_bonusow, lista_kluczy, darmowy_rzut, kwota):
+    if not darmowy_rzut:
+        kwota = kwotaDoObstawienia(stanKonta)
+    poprawne = False
+    while not poprawne:
+        rozpoczecieSzufli = str(input("Wpisz t aby rozpoczac ruch maszyny! "))
+        if rozpoczecieSzufli != "t":
+            print("Niepoprawna wartosc, wpisz t aby rozpoczac!")
+        else:
+            poprawne = True
+    print("")
+    mnoznik, darmowy_rzut = automat.ruchAutomatu(symbole_i_wartosci, lista_bonusow, lista_kluczy)
+    if mnoznik == 0 and darmowy_rzut == False:
+        print("Niestety nic nie wygrałeś tym razem! Spróbuj ponownie")
+        stanKonta = stanKonta - kwota
+    elif mnoznik != 0 and darmowy_rzut == False:
+        print("Wygrałeś " + str(kwota*mnoznik) + "!!")
+        stanKonta = stanKonta - kwota
+        stanKonta = stanKonta + kwota*mnoznik
+    elif mnoznik == 0 and darmowy_rzut == True:
+        print("Udalo ci sie wygrac darmowy rzut, aby go wykorzystac musisz ponownie od razu zagrać, "
+              "inaczej przepadnie! Kwota obstawiona przechodzi z tej na nastepna runde! Jezeli zrezygnujesz to nie "
+              "stracisz pieniedzy!")
+    else:
+        print("Wygrałeś " + str(kwota*mnoznik) + "!! Dodatkowo udalo ci sie wygrac darmowy rzut, aby go wykorzystac "
+                                                 "musisz ponownie od razu zagrać, inaczej przepadnie! Kwota "
+                                                 "obstawiona przechodzi z tej na nastepna runde! Jezeli zrezygnujesz "
+                                                 "to nie stracisz pieniedzy!")
+        stanKonta = stanKonta + kwota*mnoznik
+    wybor = False
+    while not wybor:
+        if stanKonta == 0:
+            wspolneFunkcje.doWidzenia(stanKonta, True)
+        ponownaGra = int(
+            input("Czy chciałbyś zagrać ponownie? Wpisz 1 jeżeli tak lub 0 jeżeli chcesz wrócić do menu gier "))
+        if ponownaGra == 1:
+            automatWprowadzenie(stanKonta, kwota, darmowy_rzut)
+        elif ponownaGra == 0:
+            menuGier(stanKonta)
+        else:
+            print("Błędne wprowadzenie, wprowadź 1 aby rozpocząć nową grę lub 0 aby wrócić do menu gier")
+
+
+
 def blackjackWprowadzenie(stanKonta):
     karty = {'Serce': {'Dwa': False, 'Trzy': False, 'Cztery': False, 'Pięć': False, 'Sześć': False, 'Siedem': False, 'Osiem': False, 'Dziewięć': False, 'Dziesięć': False, 'Walet': False, 'Dama': False, 'Król': False, 'As': False}, 'Piki':{'Dwa': False, 'Trzy': False, 'Cztery': False, 'Pięć': False, 'Sześć': False, 'Siedem': False, 'Osiem': False, 'Dziewięć': False, 'Dziesięć': False, 'Walet': False, 'Dama': False, 'Król': False, 'As': False}, 'Trefle':{'Dwa': False, 'Trzy': False, 'Cztery': False, 'Pięć': False, 'Sześć': False, 'Siedem': False, 'Osiem': False, 'Dziewięć': False, 'Dziesięć': False, 'Walet': False, 'Dama': False, 'Król': False, 'As': False},'Kiery':{'Dwa': False, 'Trzy': False, 'Cztery': False, 'Pięć': False, 'Sześć': False, 'Siedem': False, 'Osiem': False, 'Dziewięć': False, 'Dziesięć': False, 'Walet': False, 'Dama': False, 'Król': False, 'As': False}}
     print("Wpisz 1 aby rozpocząć grę, lub 0 aby wyjść z niej")
@@ -208,6 +252,26 @@ def ruletkaWprowadzenie(stanKonta):
         menuGier(stanKonta)
 
 
+def automatWprowadzenie(stanKonta, kwota, darmowy_rzut):
+    symbole_i_wartosci = {"arbuz": 1, "pomarancz": 1, "truskawka": 1, "siodemka": 2, "bonus": "bonus", "winogrona": 1, "malina": 1, "dziesiatka": 2, "czeresnia": 1}
+    lista_bonusow = ['dodatkowy rzut', 'wygrana 10x', 'dodatkowy rzut', 'dodatkowy rzut', 'dodatkowy rzut', 'wygrana 3x', 'wygrana 3x']
+    lista_kluczy = ["arbuz", "pomarancz", "truskawka", "siodemka", "bonus", "winogrona", "malina", "dziesiatka", "czeresnia"]
+    rozpoczecie = False
+    print("Wpisz 1 aby rozpocząć grę, lub 0 aby wyjść z niej")
+    while rozpoczecie == False:
+        zeroJeden = int(input())
+        if zeroJeden == 1:
+            rozpoczecie = True
+        elif zeroJeden == 0:
+            rozpoczecie = True
+        else:
+            print("Błędne wprowadzenie, wprowadź jeszcze raz 1 albo 0")
+    if zeroJeden == 1:
+        rundaAutomatu(stanKonta, symbole_i_wartosci, lista_bonusow, lista_kluczy, darmowy_rzut, kwota)
+    else:
+        menuGier(stanKonta)
+
+
 def menuGier(stanKonta):
     czyWKasynie = True
     print("Menu Gier")
@@ -227,14 +291,10 @@ def menuGier(stanKonta):
             ruletkaWprowadzenie(stanKonta)
             prawidlowyWybor = True
         elif wybor == 3:
-            print("3")
+            automatWprowadzenie(stanKonta, 0, False)
             prawidlowyWybor = True
         elif wybor == 4:
-             print("4")
              prawidlowyWybor = True
-        elif wybor == 5:
-            print("5")
-            prawidlowyWybor = True
         elif wybor == 0:
             wspolneFunkcje.doWidzenia(stanKonta, czyWKasynie)
             prawidlowyWybor = True
