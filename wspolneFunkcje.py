@@ -11,19 +11,6 @@ def doWidzenia(stanKonta, bylWKasynie):
     quit()
 
 
-def kwotaDoObstawienia(stanKonta):
-    kwotaWprowadzona = False
-    while kwotaWprowadzona == False:
-        kwota= int(input("Wprowadz kwotę jaką chcesz obstawić. Dostępny jest przedział od 0 do " + str(stanKonta) + " " ))
-        if kwota <= 0:
-            print("Nie można wprowadzić ujemnej ani zerowej kwoty, wprowadź jeszcze raz")
-        elif kwota > stanKonta:
-            print("Nie masz tyle pieniedzy, sprobuj jeszcze raz")
-        else:
-            kwotaWprowadzona = True
-    return kwota
-
-
 def dobieranieKarty(karty, kartyUczestnika):
     czyDobrana = False
     while czyDobrana == False:

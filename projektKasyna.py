@@ -3,9 +3,22 @@ import blackjack
 import koloRuletka
 import wspolneFunkcje
 
+
+def kwotaDoObstawienia(stanKonta):
+    kwotaWprowadzona = False
+    while kwotaWprowadzona == False:
+        kwota= int(input("Wprowadz kwotę jaką chcesz obstawić. Dostępny jest przedział od 0 do " + str(stanKonta) + " " ))
+        if kwota <= 0:
+            print("Nie można wprowadzić ujemnej ani zerowej kwoty, wprowadź jeszcze raz")
+        elif kwota > stanKonta:
+            print("Nie masz tyle pieniedzy, sprobuj jeszcze raz")
+        else:
+            kwotaWprowadzona = True
+    return kwota
+
     
 def rundaBlackjack(stanKonta, karty):
-    kwota = wspolneFunkcje.kwotaDoObstawienia(stanKonta)
+    kwota = kwotaDoObstawienia(stanKonta)
     kartyGracza = []
     kartyDealera = []
     while len(kartyGracza) < 2:
@@ -111,7 +124,7 @@ def rundaRuletki(stanKonta, ruletka):
             poprawnieWybrane = True
         else:
             print("Błędny wybór, proszę wprowadzić poprawną nazwę")
-    kwota = wspolneFunkcje.kwotaDoObstawienia(stanKonta)
+    kwota =kwotaDoObstawienia(stanKonta)
     wynik = koloRuletka.krecenieKolem()
     print("Wypadło " + str(wynik))
     
