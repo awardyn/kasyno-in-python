@@ -1,5 +1,32 @@
 import random
 
+def ponowneRozpoczecie(stanKonta):
+    wybor = False
+    while not wybor:
+        if stanKonta == 0:
+            doWidzenia(stanKonta, True)
+        ponownaGra = str(
+            input("Czy chciałbyś zagrać ponownie? Wpisz 1 jeżeli tak lub 0 jeżeli chcesz wrócić do menu gier "))
+        if ponownaGra == "1":
+            wybor = True
+        elif ponownaGra == "0":
+            wybor = True
+        else:
+            print("Błędne wprowadzenie, wprowadź 1 aby rozpocząć nową grę lub 0 aby wrócić do menu gier")
+    return ponownaGra
+
+def rozpoczecie():
+    rozpoczecie = False
+    print("Wpisz 1 aby rozpocząć grę, lub 0 aby wyjść z niej")
+    while rozpoczecie == False:
+        zeroJeden = str(input())
+        if zeroJeden == "1":
+            rozpoczecie = True
+        elif zeroJeden == "0":
+            rozpoczecie = True
+        else:
+            print("Błędne wprowadzenie, wprowadź jeszcze raz 1 albo 0")
+    return zeroJeden
 
 def doWidzenia(stanKonta, bylWKasynie):
     print("Do widzenia! Do zobaczenia następnym razem!")

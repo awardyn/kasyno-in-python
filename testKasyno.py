@@ -3,6 +3,7 @@ import koloRuletka
 import blackjack
 import automat
 
+
 def testkwotaDoObstawienia():
     assert type([]) == type(wspolneFunkcje.dobieranieKarty({'Serce': {'Dwa': False, 'Trzy': False, 'Cztery': False,
                                                                       'Pięć': False, 'Sześć': False, 'Siedem': False,
@@ -47,5 +48,26 @@ def testdobieranieKarty():
 
 
 def testwygrana():
-    assert automat.wygrana({"arbuz": 1, "pomarancz": 1, "truskawka": 1, "siodemka": 2, "bonus": "bonus", "winogrona": 1, "malina": 1, "dziesiatka": 2, "czeresnia": 1}, ['dodatkowy rzut', 'wygrana 10x', 'dodatkowy rzut', 'dodatkowy rzut', 'dodatkowy rzut', 'wygrana 3x', 'wygrana 3x'], ["arbuz", "pomarancz", "truskawka", "siodemka", "bonus", "winogrona", "malina", "dziesiatka", "czeresnia"], 0, 0, False) == (1, False)
-    assert automat.wygrana({"arbuz": 1, "pomarancz": 1, "truskawka": 1, "siodemka": 2, "bonus": "bonus", "winogrona": 1, "malina": 1, "dziesiatka": 2, "czeresnia": 1}, ['dodatkowy rzut', 'dodatkowy rzut', 'dodatkowy rzut', 'dodatkowy rzut'], ["arbuz", "pomarancz", "truskawka", "siodemka", "bonus", "winogrona", "malina", "dziesiatka", "czeresnia"], 4, 10, False) == (10, True)
+    assert automat.wygrana(
+        {"arbuz": 1, "pomarancz": 1, "truskawka": 1, "siodemka": 2, "bonus": "bonus", "winogrona": 1, "malina": 1,
+         "dziesiatka": 2, "czeresnia": 1},
+        ['dodatkowy rzut', 'wygrana 10x', 'dodatkowy rzut', 'dodatkowy rzut', 'dodatkowy rzut', 'wygrana 3x',
+         'wygrana 3x'],
+        ["arbuz", "pomarancz", "truskawka", "siodemka", "bonus", "winogrona", "malina", "dziesiatka", "czeresnia"], 0,
+        0, False) == (1, False)
+    assert automat.wygrana(
+        {"arbuz": 1, "pomarancz": 1, "truskawka": 1, "siodemka": 2, "bonus": "bonus", "winogrona": 1, "malina": 1,
+         "dziesiatka": 2, "czeresnia": 1}, ['dodatkowy rzut', 'dodatkowy rzut', 'dodatkowy rzut', 'dodatkowy rzut'],
+        ["arbuz", "pomarancz", "truskawka", "siodemka", "bonus", "winogrona", "malina", "dziesiatka", "czeresnia"], 4,
+        10, False) == (10, True)
+
+
+def testsprawdzenieWyniku():
+    assert koloRuletka.sprawdzeniewyniku(10, {
+        'Czerwone': [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36],
+        'Czarne': [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35]}) == (
+               'parzyste', 'czarne', 'pierwszy tuzin')
+    assert koloRuletka.sprawdzeniewyniku(27, {
+        'Czerwone': [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36],
+        'Czarne': [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35]}) == (
+               'nieparzyste', 'czerwone', 'trzeci tuzin')
