@@ -1,4 +1,6 @@
 import random
+
+
 def wygrana(symbole_i_wartosci, lista_bonusow, lista_kluczy, i, suma, dodatkowy_rzut):
     if lista_kluczy[i] == 'bonus':
         bonus = random.choice(lista_bonusow)
@@ -18,7 +20,7 @@ def ruchAutomatu(symbole_i_wartosci, lista_bonusow, lista_kluczy):
     pierwszaKolumna = random.choice(lista_kluczy)
     drugaKolumna = random.choice(lista_kluczy)
     trzeciaKolumna = random.choice(lista_kluczy)
-    for i in range (len(lista_kluczy)):
+    for i in range(len(lista_kluczy)):
         if lista_kluczy[i] == pierwszaKolumna:
             i1 = i
             if i == 0:
@@ -65,18 +67,17 @@ def ruchAutomatu(symbole_i_wartosci, lista_bonusow, lista_kluczy):
     dodatkowy_rzut = False
     if lista_kluczy[i1b] == lista_kluczy[i2] and lista_kluczy[i1b] == lista_kluczy[i3a]:
         ilosc_wygranych += 1
-        suma, dodatkowy_rzut =  wygrana(symbole_i_wartosci, lista_bonusow, lista_kluczy, i2, suma, dodatkowy_rzut)
+        suma, dodatkowy_rzut = wygrana(symbole_i_wartosci, lista_bonusow, lista_kluczy, i2, suma, dodatkowy_rzut)
     if lista_kluczy[i1a] == lista_kluczy[i2] and lista_kluczy[i1a] == lista_kluczy[i3b]:
         ilosc_wygranych += 1
         suma, dodatkowy_rzut = wygrana(symbole_i_wartosci, lista_bonusow, lista_kluczy, i2, suma, dodatkowy_rzut)
     if lista_kluczy[i1b] == lista_kluczy[i2b] and lista_kluczy[i1b] == lista_kluczy[i3b]:
         ilosc_wygranych += 1
-        suma ,dodatkowy_rzut = wygrana(symbole_i_wartosci, lista_bonusow, lista_kluczy, i1b, suma, dodatkowy_rzut)
+        suma, dodatkowy_rzut = wygrana(symbole_i_wartosci, lista_bonusow, lista_kluczy, i1b, suma, dodatkowy_rzut)
     if lista_kluczy[i1] == lista_kluczy[i2] and lista_kluczy[i1] == lista_kluczy[i3]:
         ilosc_wygranych += 1
         suma, dodatkowy_rzut = wygrana(symbole_i_wartosci, lista_bonusow, lista_kluczy, i1, suma, dodatkowy_rzut)
     if lista_kluczy[i1a] == lista_kluczy[i2a] and lista_kluczy[i1a] == lista_kluczy[i3a]:
         ilosc_wygranych += 1
         suma, dodatkowy_rzut = wygrana(symbole_i_wartosci, lista_bonusow, lista_kluczy, i1a, suma, dodatkowy_rzut)
-    return suma*ilosc_wygranych, dodatkowy_rzut
-
+    return suma * ilosc_wygranych, dodatkowy_rzut

@@ -8,7 +8,7 @@ import time
 
 def kwotaDoObstawienia(stanKonta):
     kwotaWprowadzona = False
-    while kwotaWprowadzona == False:
+    while not kwotaWprowadzona:
         kwota = int(
             input("Wprowadz kwotę jaką chcesz obstawić. Dostępny jest przedział od 0 do " + str(stanKonta) + " "))
         if kwota <= 0:
@@ -34,7 +34,7 @@ def rundaBlackjack(stanKonta, karty):
     punktacjaGracza, punktacjaDealera = blackjack.punktacjaKart(kartyGracza, kartyDealera)
     ktosWygral = False
     czySkonczyles = False
-    while ktosWygral == False:
+    while not ktosWygral:
         print("Karty dealera to:")
         for i in range(len(kartyDealera)):
             print(kartyDealera[i][1] + " " + kartyDealera[i][0])
@@ -65,7 +65,7 @@ def rundaBlackjack(stanKonta, karty):
             print("MASZ WIĘCEJ NIŻ 21 PUNKTÓW, PRZEGRAŁEŚ " + str(kwota) + "!")
             ktosWygral = True
         else:
-            if czySkonczyles == False:
+            if not czySkonczyles:
                 print("Czy chcesz dobrać kolejną kartę? [dobierz/zostaw]")
                 dobieranie = str(input())
                 if dobieranie == 'dobierz':
@@ -79,7 +79,7 @@ def rundaBlackjack(stanKonta, karty):
                 while punktacjaDealera <= punktacjaGracza and punktacjaDealera < 21:
                     kartyDealera = wspolneFunkcje.dobieranieKarty(karty, kartyDealera)
                     punktacjaGracza, punktacjaDealera = blackjack.punktacjaKart(kartyGracza, kartyDealera)
-                if punktacjaDealera > punktacjaGracza and punktacjaDealera <= 21:
+                if punktacjaGracza < punktacjaDealera <= 21:
                     print("Karty dealera to:")
                     for i in range(len(kartyDealera)):
                         print(kartyDealera[i][1] + " " + kartyDealera[i][0])
@@ -160,7 +160,7 @@ def rundaAutomatu(stanKonta, symbole_i_wartosci, lista_bonusow, lista_kluczy, da
         print("Wygrałeś " + str(kwota * mnoznik) + "!!")
         stanKonta = stanKonta - kwota
         stanKonta = stanKonta + kwota * mnoznik
-    elif mnoznik == 0 and darmowy_rzut == True:
+    elif mnoznik == 0 and darmowy_rzut:
         print("Udalo ci sie wygrac darmowy rzut, aby go wykorzystac musisz ponownie od razu zagrać, "
               "inaczej przepadnie! Kwota obstawiona przechodzi z tej na nastepna runde! Jezeli zrezygnujesz to nie "
               "stracisz pieniedzy!")
@@ -210,14 +210,17 @@ def rundaBingo90(stanKonta, planszaGracza, planszeKomputera, liczby):
     wygrana = False
     while not wygrana:
         for i in range(2):
-            print(str(2-i) + "...")
+            print(str(2 - i) + "...")
             time.sleep(1)
         liczba, liczby = bingo.losowanieLiczby(liczby)
         print("Wypadlo " + str(liczba) + "!")
-        wygrana, stanKonta, wierszeGracza, kolumnyGracza = bingo.sprawdzenieLiczby(kwota, liczba, stanKonta, planszaGracza, wierszeGracza, kolumnyGracza, wygrana)
+        wygrana, stanKonta, wierszeGracza, kolumnyGracza = bingo.sprawdzenieLiczby(kwota, liczba, stanKonta,
+                                                                                   planszaGracza, wierszeGracza,
+                                                                                   kolumnyGracza, wygrana)
         if not wygrana:
             for b in range(3):
-                wygrana, stanKonta, wK, kK = bingo.sprawdzenieLiczbyKomputer(kwota, liczba, stanKonta, planszeKomputera[b], wK, kK, b, wygrana)
+                wygrana, stanKonta, wK, kK = bingo.sprawdzenieLiczbyKomputer(kwota, liczba, stanKonta,
+                                                                             planszeKomputera[b], wK, kK, b, wygrana)
     ponownaGra = wspolneFunkcje.ponowneRozpoczecie(stanKonta)
     if ponownaGra == "1":
         bingo90Wprowadzenie(stanKonta)
@@ -275,7 +278,7 @@ def automatWprowadzenie(stanKonta, kwota, darmowy_rzut):
 def bingo90Wprowadzenie(stanKonta):
     # TU SIE ZNADUJA DWIE TABLICE ZAGNIEZDZONE
     liczby = []
-    for i in range(1,91):
+    for i in range(1, 91):
         liczby.append(i)
     planszaBingo90 = bingo.tworzeniePlanszy()
     planszeK = []
@@ -296,7 +299,7 @@ def menuGier(stanKonta):
         print("Jeżeli chcesz zagrać w " + listaGier[i] + " wybierz " + str(i + 1))
     print("Jeżeli chcesz wyjść z kasyna wybierz 0")
     prawidlowyWybor = False
-    while prawidlowyWybor == False:
+    while not prawidlowyWybor:
         wybor = str(input())
         if wybor == "1":
             print("Witamy w grze blackjack")
@@ -320,7 +323,7 @@ def menuGier(stanKonta):
 
 def czyChceszWejsc():
     tak = False
-    while tak == False:
+    while not tak:
         wejscie = str(input("Czy jestes pewien, ze chcesz rzucic sie w wir szaleństwa kasynowego? [T/N] "))
         if wejscie == "T":
             print("Super! Zaczynajmy!")
@@ -331,7 +334,7 @@ def czyChceszWejsc():
             break
         else:
             blad()
-    if tak == True:
+    if tak:
         stanKonta = float(1000)
         menuGier(stanKonta)
 
@@ -342,7 +345,7 @@ def blad():
 
 def czyPelnoletni():
     pelnoletni = False
-    while pelnoletni == False:
+    while not pelnoletni:
         pelnoletnosc = str(input("Czy jesteś pełnoletni? [T/N] "))
         if pelnoletnosc == "T":
             print("Super, czyli możesz wejść do kasyna!")
@@ -353,7 +356,7 @@ def czyPelnoletni():
             break
         else:
             blad()
-    if pelnoletni == True:
+    if pelnoletni:
         czyChceszWejsc()
 
 

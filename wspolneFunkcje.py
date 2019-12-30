@@ -1,5 +1,6 @@
 import random
 
+
 def ponowneRozpoczecie(stanKonta):
     wybor = False
     while not wybor:
@@ -15,22 +16,24 @@ def ponowneRozpoczecie(stanKonta):
             print("Błędne wprowadzenie, wprowadź 1 aby rozpocząć nową grę lub 0 aby wrócić do menu gier")
     return ponownaGra
 
+
 def rozpoczecie():
-    rozpoczecie = False
+    rozp = False
     print("Wpisz 1 aby rozpocząć grę, lub 0 aby wyjść z niej")
-    while rozpoczecie == False:
-        zeroJeden = str(input())
-        if zeroJeden == "1":
-            rozpoczecie = True
-        elif zeroJeden == "0":
-            rozpoczecie = True
+    while not rozp:
+        zj = str(input())
+        if zj == "1":
+            rozp = True
+        elif zj == "0":
+            rozp = True
         else:
             print("Błędne wprowadzenie, wprowadź jeszcze raz 1 albo 0")
-    return zeroJeden
+    return zj
+
 
 def doWidzenia(stanKonta, bylWKasynie):
     print("Do widzenia! Do zobaczenia następnym razem!")
-    if bylWKasynie == True:
+    if bylWKasynie:
         if stanKonta == 0:
             print("Twoj stan konta wynosi 0 więc wypadasz z kasyna!")
         else:
@@ -40,10 +43,10 @@ def doWidzenia(stanKonta, bylWKasynie):
 
 def dobieranieKarty(karty, kartyUczestnika):
     czyDobrana = False
-    while czyDobrana == False:
+    while not czyDobrana:
         nazwa, slownikWartosci = random.choice(list(karty.items()))
         wartosc, czyWybrana = random.choice(list(slownikWartosci.items()))
-        if czyWybrana == False:
+        if not czyWybrana:
             kartyUczestnika.append([nazwa, wartosc])
             karty[nazwa][wartosc] = True
             czyDobrana = True
