@@ -1,8 +1,9 @@
-import random
-import blackjack
 import koloRuletka
 import wspolneFunkcje
 import automat
+import blackjack
+import bingo
+import time
 
 
 def kwotaDoObstawienia(stanKonta):
@@ -176,6 +177,56 @@ def rundaAutomatu(stanKonta, symbole_i_wartosci, lista_bonusow, lista_kluczy, da
     else:
         menuGier(stanKonta)
 
+def rundaBingo90(stanKonta, planszaGracza, planszeKomputera):
+    kwota = kwotaDoObstawienia(stanKonta)
+    wierszeGracza = [[], [], [], [], []]
+    kolumnyGracza = [[], [], [], [], []]
+    kK = []
+    wK = []
+    for i in range(3):
+        kK.append([[], [], [], [], []])
+        wK.append([[], [], [], [], []])
+
+    print("Zaczynamy gre w Bingo! Co 2 sekundy bedzie losowana jedna liczba z zakresu od 1 do 90 przy czym bedziesz "
+          "dostawac informacje czy ktorys z graczy trafil liczbe. Wygrywa ta osoba, ktora trafi pierwsza caly wiersz/ "
+          "kolumne!")
+    print(" ")
+    print("Twoja plansza wyglada nastepujaco")
+    for i in range(len(planszaGracza)):
+        wiersz = ""
+        for j in range(len(planszaGracza[i])):
+            wiersz = wiersz + str(planszaGracza[i][j]) + " "
+        print(wiersz)
+    poprawne = False
+    while not poprawne:
+        rozpoczecieBingo = str(input("Wpisz t po przeczytaniu zasady! "))
+        if rozpoczecieBingo != "t":
+            print("Niepoprawna wartosc, wpisz t aby rozpoczac!")
+        else:
+            poprawne = True
+    print("Zaczynamy!")
+    print(" ")
+    wygrana = False
+    while not wygrana:
+        for i in range(2):
+            print(str(2-i) + "...")
+            time.sleep(1)
+        liczba = bingo.losowanieLiczby()
+        print("Wypadlo " + str(liczba) + "!")
+        for i in range(len(planszaGracza)):
+            for j in range(len(planszaGracza[i])):
+                if liczba == planszaGracza[i][j]:
+                    print("Trafiles liczbe!")
+                    print(" ")
+                    wierszeGracza[j].append(liczba)
+                    kolumnyGracza[i].append(liczba)
+                    if len(wierszeGracza[i]) == 5:
+                        print("BINGO! Wygrales!")
+                        stanKonta = stanKonta + 4*kwota
+                        wygrana = True
+                        break
+                    
+
 
 def blackjackWprowadzenie(stanKonta):
     karty = {'Serce': {'Dwa': False, 'Trzy': False, 'Cztery': False, 'Pięć': False, 'Sześć': False, 'Siedem': False,
@@ -224,11 +275,23 @@ def automatWprowadzenie(stanKonta, kwota, darmowy_rzut):
         menuGier(stanKonta)
 
 
+def bingo90Wprowadzenie(stanKonta):
+    # TU SIE ZNADUJA DWIE TABLICE ZAGNIEZDZONE
+    planszaBingo90 = bingo.tworzeniePlanszy()
+    planszeK = []
+    for i in range(3):
+        plansza = bingo.tworzeniePlanszy()
+        planszeK.append(plansza)
+    zeroJeden = wspolneFunkcje.rozpoczecie()
+    if zeroJeden == "1":
+        rundaBingo90(stanKonta, planszaBingo90, planszeK)
+
+
 def menuGier(stanKonta):
     czyWKasynie = True
     print("Menu Gier")
     print("Twoj aktualny stan konta to " + str(stanKonta) + ". W co chciałbyś aktualnie zagrać?")
-    listaGier = ['blackjacka', 'ruletkę', 'automat', 'pokera']
+    listaGier = ['blackjacka', 'ruletkę', 'automat', 'bingo90']
     for i in range(len(listaGier)):
         print("Jeżeli chcesz zagrać w " + listaGier[i] + " wybierz " + str(i + 1))
     print("Jeżeli chcesz wyjść z kasyna wybierz 0")
@@ -246,6 +309,7 @@ def menuGier(stanKonta):
             automatWprowadzenie(stanKonta, 0, False)
             prawidlowyWybor = True
         elif wybor == "4":
+            bingo90Wprowadzenie(stanKonta)
             prawidlowyWybor = True
         elif wybor == "5":
             wspolneFunkcje.doWidzenia(stanKonta, czyWKasynie)
