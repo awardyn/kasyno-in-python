@@ -177,7 +177,8 @@ def rundaAutomatu(stanKonta, symbole_i_wartosci, lista_bonusow, lista_kluczy, da
     else:
         menuGier(stanKonta)
 
-def rundaBingo90(stanKonta, planszaGracza, planszeKomputera):
+
+def rundaBingo90(stanKonta, planszaGracza, planszeKomputera, liczby):
     kwota = kwotaDoObstawienia(stanKonta)
     wierszeGracza = [[], [], [], [], []]
     kolumnyGracza = [[], [], [], [], []]
@@ -211,21 +212,17 @@ def rundaBingo90(stanKonta, planszaGracza, planszeKomputera):
         for i in range(2):
             print(str(2-i) + "...")
             time.sleep(1)
-        liczba = bingo.losowanieLiczby()
+        liczba, liczby = bingo.losowanieLiczby(liczby)
         print("Wypadlo " + str(liczba) + "!")
-        for i in range(len(planszaGracza)):
-            for j in range(len(planszaGracza[i])):
-                if liczba == planszaGracza[i][j]:
-                    print("Trafiles liczbe!")
-                    print(" ")
-                    wierszeGracza[j].append(liczba)
-                    kolumnyGracza[i].append(liczba)
-                    if len(wierszeGracza[i]) == 5:
-                        print("BINGO! Wygrales!")
-                        stanKonta = stanKonta + 4*kwota
-                        wygrana = True
-                        break
-                    
+        wygrana, stanKonta, wierszeGracza, kolumnyGracza = bingo.sprawdzenieLiczby(kwota, liczba, stanKonta, planszaGracza, wierszeGracza, kolumnyGracza, wygrana)
+        if not wygrana:
+            for b in range(3):
+                wygrana, stanKonta, wK, kK = bingo.sprawdzenieLiczbyKomputer(kwota, liczba, stanKonta, planszeKomputera[b], wK, kK, b, wygrana)
+    ponownaGra = wspolneFunkcje.ponowneRozpoczecie(stanKonta)
+    if ponownaGra == "1":
+        bingo90Wprowadzenie(stanKonta)
+    else:
+        menuGier(stanKonta)
 
 
 def blackjackWprowadzenie(stanKonta):
@@ -277,6 +274,9 @@ def automatWprowadzenie(stanKonta, kwota, darmowy_rzut):
 
 def bingo90Wprowadzenie(stanKonta):
     # TU SIE ZNADUJA DWIE TABLICE ZAGNIEZDZONE
+    liczby = []
+    for i in range(1,91):
+        liczby.append(i)
     planszaBingo90 = bingo.tworzeniePlanszy()
     planszeK = []
     for i in range(3):
@@ -284,7 +284,7 @@ def bingo90Wprowadzenie(stanKonta):
         planszeK.append(plansza)
     zeroJeden = wspolneFunkcje.rozpoczecie()
     if zeroJeden == "1":
-        rundaBingo90(stanKonta, planszaBingo90, planszeK)
+        rundaBingo90(stanKonta, planszaBingo90, planszeK, liczby)
 
 
 def menuGier(stanKonta):
@@ -311,7 +311,7 @@ def menuGier(stanKonta):
         elif wybor == "4":
             bingo90Wprowadzenie(stanKonta)
             prawidlowyWybor = True
-        elif wybor == "5":
+        elif wybor == "0":
             wspolneFunkcje.doWidzenia(stanKonta, czyWKasynie)
             prawidlowyWybor = True
         else:
