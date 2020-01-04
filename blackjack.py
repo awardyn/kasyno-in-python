@@ -40,7 +40,7 @@ def punktacjaKart(kartyGracza, kartyDealera):
         if wartosc == 'As':
             graczMaAsa = True
         punktyGracza += punktyKarty
-    if graczMaAsa == True and punktyGracza + 10 <= 21:
+    if graczMaAsa is True and punktyGracza + 10 <= 21:
         punktyGracza += 10
     for i in range(len(kartyDealera)):
         wartosc = kartyDealera[i][1]
@@ -48,6 +48,6 @@ def punktacjaKart(kartyGracza, kartyDealera):
         if wartosc == 'As':
             dealerMaAsa = True
         punktyDealera += punktyKarty
-    if dealerMaAsa == True and punktyDealera + 10 <= 21:
+    if dealerMaAsa is True and punktyDealera + 10 <= 21:
         punktyDealera += 10
     return punktyGracza, punktyDealera

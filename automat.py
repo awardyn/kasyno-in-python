@@ -17,6 +17,7 @@ def wygrana(symbole_i_wartosci, lista_bonusow, lista_kluczy, i, suma, dodatkowy_
 
 
 def ruchAutomatu(symbole_i_wartosci, lista_bonusow, lista_kluczy):
+    i1b, i2b, i3b, i3, i3a, i2a, i2, i1, i1a = int(0), int(0), int(0), int(0), int(0), int(0), int(0), int(0), int(0)
     pierwszaKolumna = random.choice(lista_kluczy)
     drugaKolumna = random.choice(lista_kluczy)
     trzeciaKolumna = random.choice(lista_kluczy)
@@ -26,7 +27,7 @@ def ruchAutomatu(symbole_i_wartosci, lista_bonusow, lista_kluczy):
             if i == 0:
                 i1b = len(lista_kluczy) - 1
                 i1a = i + 1
-            if i == len(lista_kluczy) - 1:
+            elif i == len(lista_kluczy) - 1:
                 i1a = 0
                 i1b = i - 1
             else:
@@ -37,7 +38,7 @@ def ruchAutomatu(symbole_i_wartosci, lista_bonusow, lista_kluczy):
             if i == 0:
                 i2b = len(lista_kluczy) - 1
                 i2a = i + 1
-            if i == len(lista_kluczy) - 1:
+            elif i == len(lista_kluczy) - 1:
                 i2a = 0
                 i2b = i - 1
             else:
@@ -48,7 +49,7 @@ def ruchAutomatu(symbole_i_wartosci, lista_bonusow, lista_kluczy):
             if i == 0:
                 i3b = len(lista_kluczy) - 1
                 i3a = i + 1
-            if i == len(lista_kluczy) - 1:
+            elif i == len(lista_kluczy) - 1:
                 i3a = 0
                 i3b = i - 1
             else:

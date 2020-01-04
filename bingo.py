@@ -19,6 +19,7 @@ def tworzeniePlanszy():
 
 def losowanieLiczby(liczby):
     wylosowana = False
+    liczba = int(0)
     while not wylosowana:
         liczba = random.randint(1, 90)
         if liczba in liczby:

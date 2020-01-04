@@ -3,6 +3,7 @@ import random
 
 def ponowneRozpoczecie(stanKonta):
     wybor = False
+    ponownaGra = str("")
     while not wybor:
         if stanKonta == 0:
             doWidzenia(stanKonta, True)
@@ -19,6 +20,7 @@ def ponowneRozpoczecie(stanKonta):
 
 def rozpoczecie():
     rozp = False
+    zj = str("")
     print("Wpisz 1 aby rozpocząć grę, lub 0 aby wyjść z niej")
     while not rozp:
         zj = str(input())
