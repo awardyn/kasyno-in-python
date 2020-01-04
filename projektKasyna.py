@@ -8,8 +8,9 @@ import time
 
 def kwotaDoObstawienia(stanKonta):
     kwotaWprowadzona = False
+    kwota = float(0)
     while not kwotaWprowadzona:
-        kwota = int(
+        kwota = float(
             input("Wprowadz kwotę jaką chcesz obstawić. Dostępny jest przedział od 0 do " + str(stanKonta) + " "))
         if kwota <= 0:
             print("Nie można wprowadzić ujemnej ani zerowej kwoty, wprowadź jeszcze raz")
@@ -101,6 +102,8 @@ def rundaBlackjack(stanKonta, karty):
 
 def rundaRuletki(stanKonta, ruletka):
     cyfry = []
+    wybor = str("")
+    wyborl = str("")
     for i in range(37):
         cyfry.append(str(i))
     print("Wybierz co chcesz obstawić. Do wyboru masz: ")
@@ -112,7 +115,8 @@ def rundaRuletki(stanKonta, ruletka):
     poprawnieWybrane = False
     while not poprawnieWybrane:
         wybor = input()
-        if wybor in cyfry or wybor.lower() == 'parzyste' or wybor.lower() == 'nieparzyste' or wybor.lower() == 'czerwone' or wybor.lower() == 'czarne' or wybor.lower() == 'pierwszy tuzin' or wybor.lower() == 'drugi tuzin' or wybor.lower() == 'trzeci tuzin':
+        wyborl = wybor.lower()
+        if wybor in cyfry or wyborl == 'parzyste' or wyborl == 'nieparzyste' or wyborl == 'czerwone' or wyborl == 'czarne' or wyborl == 'pierwszy tuzin' or wyborl == 'drugi tuzin' or wyborl == 'trzeci tuzin':
             poprawnieWybrane = True
         else:
             print("Błędny wybór, proszę wprowadzić poprawną nazwę")
@@ -125,7 +129,7 @@ def rundaRuletki(stanKonta, ruletka):
         if wybor in cyfry:
             print("Gratulacje wygrałeś " + str(36 * kwota))
             stanKonta += 35 * kwota
-        elif wybor.lower() == 'parzyste' or wybor.lower() == 'nieparzyste' or wybor.lower() == 'czarne' or wybor.lower() == 'czerwone':
+        elif wyborl == 'parzyste' or wyborl == 'nieparzyste' or wyborl == 'czarne' or wyborl == 'czerwone':
             print("Gratulacje wygrałeś " + str(2 * kwota))
             stanKonta += kwota
         else:
@@ -153,10 +157,10 @@ def rundaAutomatu(stanKonta, symbole_i_wartosci, lista_bonusow, lista_kluczy, da
             poprawne = True
     print("")
     mnoznik, darmowy_rzut = automat.ruchAutomatu(symbole_i_wartosci, lista_bonusow, lista_kluczy)
-    if mnoznik == 0 and darmowy_rzut == False:
+    if mnoznik == 0 and darmowy_rzut is False:
         print("Niestety nic nie wygrałeś tym razem! Spróbuj ponownie")
         stanKonta = stanKonta - kwota
-    elif mnoznik != 0 and darmowy_rzut == False:
+    elif mnoznik != 0 and darmowy_rzut is False:
         print("Wygrałeś " + str(kwota * mnoznik) + "!!")
         stanKonta = stanKonta - kwota
         stanKonta = stanKonta + kwota * mnoznik
@@ -291,7 +295,6 @@ def bingo90Wprowadzenie(stanKonta):
 
 
 def menuGier(stanKonta):
-    czyWKasynie = True
     print("Menu Gier")
     print("Twoj aktualny stan konta to " + str(stanKonta) + ". W co chciałbyś aktualnie zagrać?")
     listaGier = ['blackjacka', 'ruletkę', 'automat', 'bingo90']
@@ -315,13 +318,13 @@ def menuGier(stanKonta):
             bingo90Wprowadzenie(stanKonta)
             prawidlowyWybor = True
         elif wybor == "0":
-            wspolneFunkcje.doWidzenia(stanKonta, czyWKasynie)
+            wspolneFunkcje.doWidzenia(stanKonta, True)
             prawidlowyWybor = True
         else:
             print("Bledny wybor sprobuj ponownie ")
 
 
-def czyChceszWejsc():
+def czyChceszWejsc(wKasynie):
     tak = False
     while not tak:
         wejscie = str(input("Czy jestes pewien, ze chcesz rzucic sie w wir szaleństwa kasynowego? [T/N] "))
@@ -330,7 +333,7 @@ def czyChceszWejsc():
             tak = True
         elif wejscie == "N":
             print("Szkoda!")
-            wspolneFunkcje.doWidzenia(0, czyWKasynie)
+            wspolneFunkcje.doWidzenia(0, wKasynie)
             break
         else:
             blad()
@@ -343,7 +346,7 @@ def blad():
     print("Błąd wprowadzenia, powtórz, wpisując T dla tak lub N dla nie")
 
 
-def czyPelnoletni():
+def czyPelnoletni(wKasynie):
     pelnoletni = False
     while not pelnoletni:
         pelnoletnosc = str(input("Czy jesteś pełnoletni? [T/N] "))
@@ -352,14 +355,13 @@ def czyPelnoletni():
             pelnoletni = True
         elif pelnoletnosc == "N":
             print("Niestety musisz opuścić ten lokal")
-            wspolneFunkcje.doWidzenia(0, czyWKasynie)
+            wspolneFunkcje.doWidzenia(0, wKasynie)
             break
         else:
             blad()
-    if pelnoletni:
-        czyChceszWejsc()
+    czyChceszWejsc(wKasynie)
 
 
 print("Witaj w kasynie W&W")
 czyWKasynie = False
-czyPelnoletni()
+czyPelnoletni(czyWKasynie)

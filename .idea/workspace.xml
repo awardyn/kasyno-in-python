@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="38476203-9157-4ec9-b284-07de63d77ff3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/automat.py" beforeDir="false" afterPath="$PROJECT_DIR$/automat.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/blackjack.py" beforeDir="false" afterPath="$PROJECT_DIR$/blackjack.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projektKasyna.py" beforeDir="false" afterPath="$PROJECT_DIR$/projektKasyna.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wspolneFunkcje.py" beforeDir="false" afterPath="$PROJECT_DIR$/wspolneFunkcje.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,7 +29,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="C:/Program Files (x86)/Python38-32" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyIntegratedToolsModulesConfigurable" />
   </component>
   <component name="RunManager" selected="Python.projektKasyna">
@@ -114,10 +112,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="275" y="23" key="#Notifications/0.0.1366.728@0.0.1366.728" timestamp="1577103857791" />
-    <state x="462" y="120" key="FileChooserDialogImpl" timestamp="1577103021550">
+    <state x="462" y="120" key="FileChooserDialogImpl" timestamp="1578060196558">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="462" y="120" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1577103021550" />
+    <state x="462" y="120" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1578060196558" />
     <state width="1345" height="197" key="GridCell.Tab.0.bottom" timestamp="1577716352055">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
