@@ -6,6 +6,19 @@ import bingo
 import time
 
 
+def dodawanieNowychKart(karty, kartyGracza, kartyDealera, czySkonczyles, punktacjaGracza, punktacjaDealera):
+    print("Czy chcesz dobrać kolejną kartę? [dobierz/zostaw]")
+    dobieranie = str(input())
+    if dobieranie == 'dobierz':
+        kartyGracza = wspolneFunkcje.dobieranieKarty(karty, kartyGracza)
+        punktacjaGracza, punktacjaDealera = blackjack.punktacjaKart(kartyGracza, kartyDealera)
+    elif dobieranie == 'zostaw':
+        czySkonczyles = True
+    else:
+        print("Niepoprawne slowo, wpisz dobierz dla dobrania karty lub zostaw dla skończenia")
+    return kartyGracza, punktacjaGracza, punktacjaDealera, czySkonczyles
+
+
 def kwotaDoObstawienia(stanKonta):
     kwotaWprowadzona = False
     kwota = float(0)
@@ -67,15 +80,7 @@ def rundaBlackjack(stanKonta, karty):
             ktosWygral = True
         else:
             if not czySkonczyles:
-                print("Czy chcesz dobrać kolejną kartę? [dobierz/zostaw]")
-                dobieranie = str(input())
-                if dobieranie == 'dobierz':
-                    kartyGracza = wspolneFunkcje.dobieranieKarty(karty, kartyGracza)
-                    punktacjaGracza, punktacjaDealera = blackjack.punktacjaKart(kartyGracza, kartyDealera)
-                elif dobieranie == 'zostaw':
-                    czySkonczyles = True
-                else:
-                    print("Niepoprawne slowo, wpisz dobierz dla dobrania karty lub zostaw dla skończenia")
+                kartyGracza, punktacjaGracza, punktacjaDealera, czySkonczyles = dodawanieNowychKart(karty, kartyGracza, kartyDealera, czySkonczyles, punktacjaGracza, punktacjaDealera)
             else:
                 while punktacjaDealera <= punktacjaGracza and punktacjaDealera < 21:
                     kartyDealera = wspolneFunkcje.dobieranieKarty(karty, kartyDealera)
