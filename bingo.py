@@ -1,6 +1,24 @@
 import random
 
 
+def wypisaniePlanszy(planszaGracza):
+    for i in range(len(planszaGracza)):
+        wiersz = ""
+        for j in range(len(planszaGracza[i])):
+            wiersz = wiersz + str(planszaGracza[i][j]) + " "
+        print(wiersz)
+
+
+def tworzenieTabelWynikow():
+    wierszeGracza = [[], [], [], [], []]
+    kolumnyGracza = [[], [], [], [], []]
+    kK = []
+    wK = []
+    for i in range(3):
+        kK.append([[], [], [], [], []])
+        wK.append([[], [], [], [], []])
+
+
 def tworzeniePlanszy():
     mozliweLiczby = []
     for i in range(1, 91):

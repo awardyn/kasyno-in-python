@@ -19,6 +19,7 @@ def dodawanieNowychKart(karty, kartyGracza, kartyDealera, czySkonczyles, punktac
     return kartyGracza, punktacjaGracza, punktacjaDealera, czySkonczyles
 
 
+
 def kwotaDoObstawienia(stanKonta):
     kwotaWprowadzona = False
     kwota = float(0)
@@ -49,15 +50,7 @@ def rundaBlackjack(stanKonta, karty):
     ktosWygral = False
     czySkonczyles = False
     while not ktosWygral:
-        print("Karty dealera to:")
-        for i in range(len(kartyDealera)):
-            print(kartyDealera[i][1] + " " + kartyDealera[i][0])
-        print("(Punktacja kart: " + str(punktacjaDealera) + ")")
-        print(" ")
-        print("Karty gracza to:")
-        for i in range(len(kartyGracza)):
-            print(kartyGracza[i][1] + " " + kartyGracza[i][0])
-        print("(Punktacja kart: " + str(punktacjaGracza) + ")")
+        blackjack.wypisanieKart(kartyDealera, kartyGracza, punktacjaGracza, punktacjaDealera)
 
         if punktacjaGracza == 21 and punktacjaDealera == 21:
             print("REMIS")
@@ -80,24 +73,12 @@ def rundaBlackjack(stanKonta, karty):
             ktosWygral = True
         else:
             if not czySkonczyles:
-                kartyGracza, punktacjaGracza, punktacjaDealera, czySkonczyles = dodawanieNowychKart(karty, kartyGracza, kartyDealera, czySkonczyles, punktacjaGracza, punktacjaDealera)
+                kartyGracza, punktacjaGracza, punktacjaDealera, czySkonczyles = dodawanieNowychKart(
+                    karty, kartyGracza, kartyDealera, czySkonczyles, punktacjaGracza, punktacjaDealera)
             else:
-                while punktacjaDealera <= punktacjaGracza and punktacjaDealera < 21:
-                    kartyDealera = wspolneFunkcje.dobieranieKarty(karty, kartyDealera)
-                    punktacjaGracza, punktacjaDealera = blackjack.punktacjaKart(kartyGracza, kartyDealera)
-                if punktacjaGracza < punktacjaDealera <= 21:
-                    print("Karty dealera to:")
-                    for i in range(len(kartyDealera)):
-                        print(kartyDealera[i][1] + " " + kartyDealera[i][0])
-                    print("(Punktacja kart: " + str(punktacjaDealera) + ")")
-                    print(" ")
-                    print("Karty gracza to:")
-                    for i in range(len(kartyGracza)):
-                        print(kartyGracza[i][1] + " " + kartyGracza[i][0])
-                    print("(Punktacja kart: " + str(punktacjaGracza) + ")")
-                    stanKonta -= kwota
-                    print("DEALER MA WIĘCEJ PUNKTÓW NIŻ TY I MNIEJ NIŻ 22, PRZEGRAŁEŚ " + str(kwota) + "!")
-                    ktosWygral = True
+                punktacjaGracza, punktacjaDealera, karty, kartyDealera, kartyGracza, stanKonta, ktosWygral = blackjack.poskonczeniudodawania(
+                    punktacjaGracza, punktacjaDealera, karty, kartyDealera, kartyGracza, stanKonta, kwota, ktosWygral)
+
     ponownaGra = wspolneFunkcje.ponowneRozpoczecie(stanKonta)
     if ponownaGra == "1":
         blackjackWprowadzenie(stanKonta)
@@ -111,12 +92,7 @@ def rundaRuletki(stanKonta, ruletka):
     wyborl = str("")
     for i in range(37):
         cyfry.append(str(i))
-    print("Wybierz co chcesz obstawić. Do wyboru masz: ")
-    print("1. Numery od 0-36 (wyplata 35-1)")
-    print("2. Numery parzyste/nieparzyste (wyplata 1-1)")
-    print("3. Kolory czerwone/czarne (wplata 1-1)")
-    print("4. Pierwszy tuzin/drugi tuzin/ trzeci tuzin (wyplata 2-1)")
-    print("Kolor czerwony to liczby " + str(ruletka["Czerwone"]) + " a czarne to " + str(ruletka["Czarne"]))
+    koloRuletka.mozliwosciDoWyboru(ruletka)
     poprawnieWybrane = False
     while not poprawnieWybrane:
         wybor = input()
@@ -189,19 +165,15 @@ def rundaAutomatu(stanKonta, symbole_i_wartosci, lista_bonusow, lista_kluczy, da
 
 def rundaBingo90(stanKonta, planszaGracza, planszeKomputera, liczby):
     kwota = kwotaDoObstawienia(stanKonta)
-    wierszeGracza = [[], [], [], [], []]
-    kolumnyGracza = [[], [], [], [], []]
-    kK = []
-    wK = []
-    for i in range(3):
-        kK.append([[], [], [], [], []])
-        wK.append([[], [], [], [], []])
+
+    wierszeGracza, kolumnyGracza, kK, wK = bingo.tworzenieTabelWynikow()
 
     print("Zaczynamy gre w Bingo! Co 2 sekundy bedzie losowana jedna liczba z zakresu od 1 do 90 przy czym bedziesz "
           "dostawac informacje czy ktorys z graczy trafil liczbe. Wygrywa ta osoba, ktora trafi pierwsza caly wiersz/ "
           "kolumne!")
     print(" ")
     print("Twoja plansza wyglada nastepujaco")
+    bingo.wypisanieplanszy(planszaGracza)
     for i in range(len(planszaGracza)):
         wiersz = ""
         for j in range(len(planszaGracza[i])):
@@ -314,12 +286,15 @@ def menuGier(stanKonta):
             blackjackWprowadzenie(stanKonta)
             prawidlowyWybor = True
         elif wybor == "2":
+            print("Witamy w grze ruletka")
             ruletkaWprowadzenie(stanKonta)
             prawidlowyWybor = True
         elif wybor == "3":
+            print("Witamy w grze na automacie")
             automatWprowadzenie(stanKonta, 0, False)
             prawidlowyWybor = True
         elif wybor == "4":
+            print("Witamy w grze bingo")
             bingo90Wprowadzenie(stanKonta)
             prawidlowyWybor = True
         elif wybor == "0":

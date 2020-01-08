@@ -1,6 +1,7 @@
 # Kasyno
 Gra kasyno pozwalająca online zagrać w wybrane gry bez użycia realnych pieniedzy. Wykonana jest na potrzeby projektu na zajecia ze wstepu do programowania
 
+© copyright Aleksander Wardyn
 ## Start
 Aby rozpoczac gre nalezy wlaczyc plik projektKasyna.py
 
@@ -36,7 +37,7 @@ File → Settings → Tools → Python Integrated Tools → W Default test runne
 
 * Linia polecen
     ```
-    pytest plik
+    pytest testKasyno.py
     ```
 UWAGA! plik musi mieć rozszerzenie *.py
 

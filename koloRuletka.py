@@ -32,3 +32,12 @@ def krecenieKolem():
         time.sleep(2)
         zmienna -= 1
     return wynik
+
+
+def mozliwosciDoWyboru(ruletka):
+    print("Wybierz co chcesz obstawić. Do wyboru masz: ")
+    print("1. Numery od 0-36 (wyplata 35-1)")
+    print("2. Numery parzyste/nieparzyste (wyplata 1-1)")
+    print("3. Kolory czerwone/czarne (wplata 1-1)")
+    print("4. Pierwszy tuzin/drugi tuzin/ trzeci tuzin (wyplata 2-1)")
+    print("Kolor czerwony to liczby " + str(ruletka["Czerwone"]) + " a czarne to " + str(ruletka["Czarne"]))

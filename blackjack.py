@@ -1,3 +1,6 @@
+import wspolneFunkcje
+
+
 def punkty(wartosc):
     punktyZdobyte = int(0)
     if wartosc == 'Dwa':
@@ -51,3 +54,35 @@ def punktacjaKart(kartyGracza, kartyDealera):
     if dealerMaAsa is True and punktyDealera + 10 <= 21:
         punktyDealera += 10
     return punktyGracza, punktyDealera
+
+
+def poskonczeniudodawania(punktacjaGracza, punktacjaDealera, karty, kartyDealera, kartyGracza, stanKonta, kwota, ktosWygral):
+    while punktacjaDealera <= punktacjaGracza and punktacjaDealera < 21:
+        kartyDealera = wspolneFunkcje.dobieranieKarty(karty, kartyDealera)
+        punktacjaGracza, punktacjaDealera = punktacjaKart(kartyGracza, kartyDealera)
+    if punktacjaGracza < punktacjaDealera <= 21:
+        print("Karty dealera to:")
+        for i in range(len(kartyDealera)):
+            print(kartyDealera[i][1] + " " + kartyDealera[i][0])
+        print("(Punktacja kart: " + str(punktacjaDealera) + ")")
+        print(" ")
+        print("Karty gracza to:")
+        for i in range(len(kartyGracza)):
+            print(kartyGracza[i][1] + " " + kartyGracza[i][0])
+        print("(Punktacja kart: " + str(punktacjaGracza) + ")")
+        stanKonta -= kwota
+        print("DEALER MA WIĘCEJ PUNKTÓW NIŻ TY I MNIEJ NIŻ 22, PRZEGRAŁEŚ " + str(kwota) + "!")
+        ktosWygral = True
+    return punktacjaGracza, punktacjaDealera, karty, kartyDealera, kartyGracza, stanKonta, ktosWygral
+
+
+def wypisanieKart(kartyDealera, kartyGracza, punktacjaGracza, punktacjaDealera):
+    print("Karty dealera to:")
+    for i in range(len(kartyDealera)):
+        print(kartyDealera[i][1] + " " + kartyDealera[i][0])
+    print("(Punktacja kart: " + str(punktacjaDealera) + ")")
+    print(" ")
+    print("Karty gracza to:")
+    for i in range(len(kartyGracza)):
+        print(kartyGracza[i][1] + " " + kartyGracza[i][0])
+    print("(Punktacja kart: " + str(punktacjaGracza) + ")")
