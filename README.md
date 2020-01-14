@@ -1,7 +1,7 @@
 # Kasyno
 Gra kasyno pozwalająca online zagrać w wybrane gry bez użycia realnych pieniedzy. Wykonana jest na potrzeby projektu na zajecia ze wstepu do programowania
 
-© copyright Aleksander Wardyn
+© copyright imie nazwisko
 ## Start
 Aby rozpoczac gre nalezy wlaczyc plik projektKasyna.py
 
