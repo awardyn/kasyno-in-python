@@ -40,6 +40,10 @@ def doWidzenia(stanKonta, bylWKasynie):
             print("Twoj stan konta wynosi 0 więc wypadasz z kasyna!")
         else:
             print("Twoj stan konta po wyjsciu wynosi " + str(stanKonta))
+        plik = open("stanKonta.txt", "w")
+        plik.write(str(stanKonta))
+        plik.close()
+
     quit()
 
 

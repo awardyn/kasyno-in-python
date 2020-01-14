@@ -65,7 +65,7 @@ def rundaBlackjack(stanKonta, karty):
             ktosWygral = True
         elif punktacjaDealera > 21:
             stanKonta += kwota
-            print("DEALER MA WIĘCEJ NIZ 21 PUNKTÓW, WYGRAŁEŚ" + str(kwota * 2) + "!")
+            print("DEALER MA WIĘCEJ NIZ 21 PUNKTÓW, WYGRAŁEŚ " + str(kwota * 2) + "!")
             ktosWygral = True
         elif punktacjaGracza > 21:
             stanKonta -= kwota
@@ -75,7 +75,7 @@ def rundaBlackjack(stanKonta, karty):
             if not czySkonczyles:
                 kartyGracza, punktacjaGracza, punktacjaDealera, czySkonczyles = dodawanieNowychKart(
                     karty, kartyGracza, kartyDealera, czySkonczyles, punktacjaGracza, punktacjaDealera)
-            else:
+            if czySkonczyles:
                 punktacjaGracza, punktacjaDealera, karty, kartyDealera, kartyGracza, stanKonta, ktosWygral = blackjack.poskonczeniudodawania(
                     punktacjaGracza, punktacjaDealera, karty, kartyDealera, kartyGracza, stanKonta, kwota, ktosWygral)
 
@@ -304,7 +304,7 @@ def menuGier(stanKonta):
             print("Bledny wybor sprobuj ponownie ")
 
 
-def czyChceszWejsc(wKasynie):
+def czyChceszWejsc(wKasynie, stan):
     tak = False
     while not tak:
         wejscie = str(input("Czy jestes pewien, ze chcesz rzucic sie w wir szaleństwa kasynowego? [T/N] "))
@@ -318,15 +318,14 @@ def czyChceszWejsc(wKasynie):
         else:
             blad()
     if tak:
-        stanKonta = float(1000)
-        menuGier(stanKonta)
+        menuGier(stan + 50.0)
 
 
 def blad():
     print("Błąd wprowadzenia, powtórz, wpisując T dla tak lub N dla nie")
 
 
-def czyPelnoletni(wKasynie):
+def czyPelnoletni(wKasynie, stan):
     pelnoletni = False
     while not pelnoletni:
         pelnoletnosc = str(input("Czy jesteś pełnoletni? [T/N] "))
@@ -339,9 +338,12 @@ def czyPelnoletni(wKasynie):
             break
         else:
             blad()
-    czyChceszWejsc(wKasynie)
+    czyChceszWejsc(wKasynie, stan)
 
-
+with open("stanKonta.txt", "r") as f:
+    doOdczytu = f.read()
+    stanKonta = float(doOdczytu)
+f.close()
 print("Witaj w kasynie W&W")
 czyWKasynie = False
-czyPelnoletni(czyWKasynie)
+czyPelnoletni(czyWKasynie, stanKonta)
